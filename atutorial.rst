@@ -97,3 +97,16 @@ And we get our results
     Behold the added heatmap.
 
 The same procedure can be used to add bigwig files on the top, left, right and bottom positions of the view.
+
+Creating a superuser
+--------------------
+
+To manipulate the data available on the local instance it is necessary to create a super user using 
+``higlass-manage``:
+
+.. code-block:: bash
+    
+    higlass-manage createsuperuser
+
+This user can then be used to log in to http://localhost:8989/admin, or wherever the HiGlass instance
+is currently running.

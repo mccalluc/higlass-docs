@@ -112,6 +112,16 @@ shows both the local datasets as well as the public data available on
 </div>
 <p>The same procedure can be used to add bigwig files on the top, left, right and bottom positions of the view.</p>
 </div>
+<div class="section" id="creating-a-superuser">
+<h2>Creating a superuser<a class="headerlink" href="#creating-a-superuser" title="Permalink to this headline">¶</a></h2>
+<p>To manipulate the data available on the local instance it is necessary to create a super user using
+<code class="docutils literal"><span class="pre">higlass-manage</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>higlass-manage createsuperuser
+</pre></div>
+</div>
+<p>This user can then be used to log in to <a class="reference external" href="http://localhost:8989/admin">http://localhost:8989/admin</a>, or wherever the HiGlass instance
+is currently running.</p>
+</div>
 </div>
 
 
@@ -135,6 +145,7 @@ shows both the local datasets as well as the public data available on
 <li class="toctree-l2"><a class="reference internal" href="#running-higlass-locally">Running HiGlass Locally</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-data">Adding data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#viewing-data">Viewing data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-superuser">Creating a superuser</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="b_viewer.html">Viewer</a><ul>
