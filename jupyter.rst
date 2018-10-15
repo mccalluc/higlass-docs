@@ -92,7 +92,7 @@ And displaying the dataset in the client:
             hgc.Track(track_type='heatmap', position='center',
                      tileset_uuid=ts.uuid, 
                       api_url=server.api_address,
-                      height=250
+                      height=250,
                      options={ 'valueScaleMax': 0.5 }),
 
         ])
