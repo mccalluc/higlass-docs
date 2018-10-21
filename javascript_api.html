@@ -24,7 +24,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Data Preparation" href="data_preparation.html" />
-    <link rel="prev" title="Python API" href="python_api.html" />
+    <link rel="prev" title="Tutorial" href="tutorial.html" />
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-77756807-1"></script>
   <script>
@@ -59,16 +59,16 @@
 <h3>Embedding HiGlass in web page<a class="headerlink" href="#embedding-higlass-in-web-page" title="Permalink to this headline">¶</a></h3>
 <p>HiGlass can be included in any web page by including the relevant
 javascript and css files:</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span></span>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/higlass@1.1.5/dist/styles/hglib.css&quot; type=&quot;text/css&quot;&gt;
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/higlass@1.2.6/dist/hglib.css&quot; type=&quot;text/css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; type=&quot;text/css&quot;&gt;
 
 
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.2/pixi.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.31.0/react-bootstrap.min.js&quot;&gt;&lt;/script&gt;
+&lt;script crossorigin src=&quot;https://unpkg.com/react@16/umd/react.development.js&quot;&gt;&lt;/script&gt;
+&lt;script crossorigin src=&quot;https://unpkg.com/react-dom@16/umd/react-dom.development.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.1/pixi.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.32.1/react-bootstrap.min.js&quot;&gt;&lt;/script&gt;
 
-&lt;script src=&quot;https://unpkg.com/higlass@1.1.5/dist/scripts/hglib.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/higlass@1.2.6/dist/hglib[.min].js&quot;&gt;&lt;/script&gt;
 </pre></div>
 </div>
 <p>External tracks should be included <strong>before</strong> the hglib.js import:</p>
@@ -183,15 +183,27 @@ listed:</p>
 <dl class="function">
 <dt id="viewer">
 <code class="descname">viewer</code><span class="sig-paren">(</span><em>element</em>, <em>viewConfig</em>, <em>options</em><span class="sig-paren">)</span><a class="headerlink" href="#viewer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a HiGlass component</p>
+<dd><p>Create a HiGlass component.</p>
+<p>In addition to the parameters below, a number of extra options can be passed
+using the <strong>options</strong> parameter:</p>
+<ul class="simple">
+<li><strong>authToken</strong> <em>(string)</em> - An auth token to be included with every tile request
+(e.g. <code class="docutils literal"><span class="pre">JWT</span> <span class="pre">xyz</span></code>)</li>
+<li><strong>bounded</strong> <em>(bool)</em> - A boolean specifying whether the component should be sized
+to fit within the enclosing div [default=false]. If it is false, then the component
+will grow as needed to fit the tracks within it.</li>
+<li><strong>editable</strong> <em>(bool)</em> - Can the layout be changed? If false, the view headers will
+be hidden. This can also be specified in the viewconfig using the <code class="docutils literal"><span class="pre">editable</span></code> option.
+The value passed here overrides the value in the viewconf. [default=true]</li>
+</ul>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
-<li><strong>element</strong> (<em>Object</em>) – DOM element the HiGlass component should be associated to.</li>
-<li><strong>viewConfig</strong> (<em>Object|String</em>) – Dictionary or URL of a view config.</li>
-<li><strong>options</strong> (<em>Object</em>) – Dictionary of public options.</li>
+<li><strong>element</strong> (<em>Object</em>) – DOM element the HiGlass component should be attached to.</li>
+<li><strong>viewConfig</strong> (<em>Object|String</em>) – The viewconfig to load. If this parameter is a string it will be interpreted as a url from which to retrieve the viewconf. If it is a dictionary it will be loaded as is.</li>
+<li><strong>options</strong> (<em>Object</em>) – Dictionary of public options. See the description above for a list of available values.</li>
 </ul>
 </td>
 </tr>
@@ -518,7 +530,8 @@ If it is not provided, the value is taken from the <cite>exportViewUrl</cite> va
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">rangeSelection:</span></code> Returns a BED- (1D) or BEDPE (1d) array of the selected data and genomic range (if chrom-sizes are available)</p>
+<p><code class="docutils literal"><span class="pre">rangeSelection:</span></code> Returns a BED- (1D) or BEDPE (1d) array of the selected data and
+genomic range (if chrom-sizes are available)</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// Global output</span>
 <span class="p">{</span>
   <span class="nx">dataRange</span><span class="o">:</span> <span class="p">[...]</span>
@@ -539,7 +552,8 @@ If it is not provided, the value is taken from the <cite>exportViewUrl</cite> va
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">viewConfig:</span></code> Returns the current view config.</p>
-<p><code class="docutils literal"><span class="pre">mouseMoveZoom:</span></code> Returns the raw data around the mouse cursors screen location and the related genomic location.</p>
+<p><code class="docutils literal"><span class="pre">mouseMoveZoom:</span></code> Returns the raw data around the mouse cursors screen location
+and the related genomic location.</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nx">data</span><span class="p">,</span> <span class="c1">// Raw Float32Array</span>
   <span class="nx">dim</span><span class="p">,</span>  <span class="c1">// Dimension of the lens (the lens is squared)</span>
@@ -617,16 +631,6 @@ If it is not provided, the value is taken from the <cite>exportViewUrl</cite> va
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#creating-a-superuser">Creating a superuser</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter Notebooks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="jupyter.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jupyter.html#usage">Usage</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#hgflask">hgflask</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#hgflask-client">hgflask.client</a></li>
-</ul>
-</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Javascript API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#api-functions">API Functions</a></li>
@@ -665,13 +669,9 @@ If it is not provided, the value is taken from the <cite>exportViewUrl</cite> va
 <li class="toctree-l2"><a class="reference internal" href="track_types.html#d-annotations">1D Annotations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="b_viewer.html">Viewer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#adding-views">Adding views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#closing-and-resizing-views">Closing and resizing views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#replacing-tracks">Replacing Tracks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#synchronizing-zoom-and-location">Synchronizing zoom and location</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#adding-cross-sections">Adding cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">Views</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="views.html#genome-position-search-box">Genome Position Search Box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#view-synchronization">View synchronization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="higlass_server.html">Server</a><ul>
@@ -681,23 +681,24 @@ If it is not provided, the value is taken from the <cite>exportViewUrl</cite> va
 <li class="toctree-l2"><a class="reference internal" href="higlass_server.html#api">API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="higlass_docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="higlass_docker.html#running-locally">Running locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="higlass_docker.html#running-remotely">Running remotely</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="view_config.html">View Configs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="view_config.html#show-a-specific-genomic-location">Show a specific genomic location</a></li>
 <li class="toctree-l2"><a class="reference internal" href="view_config.html#upload-a-viewconf-to-the-server">Upload a viewconf to the server</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="views.html">Views</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="views.html#genome-position-search-box">Genome Position Search Box</a></li>
-<li class="toctree-l2"><a class="reference internal" href="views.html#view-synchronization">View synchronization</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Documentation</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="python_api.html" title="previous chapter">Python API</a></li>
+      <li>Previous: <a href="tutorial.html" title="previous chapter">Tutorial</a></li>
       <li>Next: <a href="data_preparation.html" title="next chapter">Data Preparation</a></li>
   </ul></li>
 </ul>

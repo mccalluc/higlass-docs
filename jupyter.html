@@ -23,8 +23,6 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Python API" href="python_api.html" />
-    <link rel="prev" title="Tutorial" href="tutorial.html" />
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-77756807-1"></script>
   <script>
@@ -125,7 +123,7 @@ server.</p>
         <span class="n">hgc</span><span class="o">.</span><span class="n">Track</span><span class="p">(</span><span class="n">track_type</span><span class="o">=</span><span class="s1">&#39;heatmap&#39;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
                  <span class="n">tileset_uuid</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span>
                   <span class="n">api_url</span><span class="o">=</span><span class="n">server</span><span class="o">.</span><span class="n">api_address</span><span class="p">,</span>
-                  <span class="n">height</span><span class="o">=</span><span class="mi">250</span>
+                  <span class="n">height</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
                  <span class="n">options</span><span class="o">=</span><span class="p">{</span> <span class="s1">&#39;valueScaleMax&#39;</span><span class="p">:</span> <span class="mf">0.5</span> <span class="p">}),</span>
 
     <span class="p">])</span>
@@ -319,7 +317,7 @@ First we need to import the custom track type for displaying labelled points:</p
 
 
 
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#quickly-viewing-a-dataset">Quickly viewing a dataset</a></li>
@@ -327,16 +325,6 @@ First we need to import the custom track type for displaying labelled points:</p
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#adding-data">Adding data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#viewing-data-in-the-client">Viewing data in the client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#creating-a-superuser">Creating a superuser</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Jupyter Notebooks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#hgflask">hgflask</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python_api.html#hgflask-client">hgflask.client</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="javascript_api.html">Javascript API</a><ul>
@@ -377,13 +365,9 @@ First we need to import the custom track type for displaying labelled points:</p
 <li class="toctree-l2"><a class="reference internal" href="track_types.html#d-annotations">1D Annotations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="b_viewer.html">Viewer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#adding-views">Adding views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#closing-and-resizing-views">Closing and resizing views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#replacing-tracks">Replacing Tracks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#synchronizing-zoom-and-location">Synchronizing zoom and location</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#adding-cross-sections">Adding cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">Views</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="views.html#genome-position-search-box">Genome Position Search Box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#view-synchronization">View synchronization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="higlass_server.html">Server</a><ul>
@@ -393,24 +377,23 @@ First we need to import the custom track type for displaying labelled points:</p
 <li class="toctree-l2"><a class="reference internal" href="higlass_server.html#api">API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="higlass_docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="higlass_docker.html#running-locally">Running locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="higlass_docker.html#running-remotely">Running remotely</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="view_config.html">View Configs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="view_config.html#show-a-specific-genomic-location">Show a specific genomic location</a></li>
 <li class="toctree-l2"><a class="reference internal" href="view_config.html#upload-a-viewconf-to-the-server">Upload a viewconf to the server</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="views.html">Views</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="views.html#genome-position-search-box">Genome Position Search Box</a></li>
-<li class="toctree-l2"><a class="reference internal" href="views.html#view-synchronization">View synchronization</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Documentation</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="tutorial.html" title="previous chapter">Tutorial</a></li>
-      <li>Next: <a href="python_api.html" title="next chapter">Python API</a></li>
   </ul></li>
 </ul>
 </div>
