@@ -169,5 +169,9 @@ crucial are listed below.
     javascript_api
     data_preparation
     track_types
+    views
+    higlass_server
+    higlass_docker
+    view_config
     developer 
     *

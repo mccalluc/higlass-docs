@@ -59,16 +59,16 @@
 <h3>Embedding HiGlass in web page<a class="headerlink" href="#embedding-higlass-in-web-page" title="Permalink to this headline">¶</a></h3>
 <p>HiGlass can be included in any web page by including the relevant
 javascript and css files:</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span></span>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/higlass@1.1.5/dist/styles/hglib.css&quot; type=&quot;text/css&quot;&gt;
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/higlass@1.2.6/dist/hglib.css&quot; type=&quot;text/css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css&quot; type=&quot;text/css&quot;&gt;
 
 
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.2/pixi.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.31.0/react-bootstrap.min.js&quot;&gt;&lt;/script&gt;
+&lt;script crossorigin src=&quot;https://unpkg.com/react@16/umd/react.development.js&quot;&gt;&lt;/script&gt;
+&lt;script crossorigin src=&quot;https://unpkg.com/react-dom@16/umd/react-dom.development.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.1/pixi.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.32.1/react-bootstrap.min.js&quot;&gt;&lt;/script&gt;
 
-&lt;script src=&quot;https://unpkg.com/higlass@1.1.5/dist/scripts/hglib.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/higlass@1.2.6/dist/hglib[.min].js&quot;&gt;&lt;/script&gt;
 </pre></div>
 </div>
 <p>External tracks should be included <strong>before</strong> the hglib.js import:</p>
@@ -678,13 +678,9 @@ and the related genomic location.</p>
 <li class="toctree-l2"><a class="reference internal" href="track_types.html#d-annotations">1D Annotations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="b_viewer.html">Viewer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#adding-views">Adding views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#closing-and-resizing-views">Closing and resizing views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#replacing-tracks">Replacing Tracks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#synchronizing-zoom-and-location">Synchronizing zoom and location</a></li>
-<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#adding-cross-sections">Adding cross sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">Views</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="views.html#genome-position-search-box">Genome Position Search Box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#view-synchronization">View synchronization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="higlass_server.html">Server</a><ul>
@@ -694,14 +690,23 @@ and the related genomic location.</p>
 <li class="toctree-l2"><a class="reference internal" href="higlass_server.html#api">API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="higlass_docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="higlass_docker.html#running-locally">Running locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="higlass_docker.html#running-remotely">Running remotely</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="view_config.html">View Configs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="view_config.html#show-a-specific-genomic-location">Show a specific genomic location</a></li>
 <li class="toctree-l2"><a class="reference internal" href="view_config.html#upload-a-viewconf-to-the-server">Upload a viewconf to the server</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="views.html">Views</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="views.html#genome-position-search-box">Genome Position Search Box</a></li>
-<li class="toctree-l2"><a class="reference internal" href="views.html#view-synchronization">View synchronization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="b_viewer.html">Viewer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#adding-views">Adding views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#closing-and-resizing-views">Closing and resizing views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#replacing-tracks">Replacing Tracks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#synchronizing-zoom-and-location">Synchronizing zoom and location</a></li>
+<li class="toctree-l2"><a class="reference internal" href="b_viewer.html#adding-cross-sections">Adding cross sections</a></li>
 </ul>
 </li>
 </ul>
