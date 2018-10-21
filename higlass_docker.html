@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Python API &#8212; HiGlass v1.0 documentation</title>
+    <title>Docker &#8212; HiGlass v1.0 documentation</title>
     <link rel="stylesheet" href="_static/higlass.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Javascript API" href="javascript_api.html" />
-    <link rel="prev" title="Jupyter Notebooks" href="jupyter.html" />
+    <link rel="next" title="View Configs" href="view_config.html" />
+    <link rel="prev" title="Server" href="higlass_server.html" />
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-77756807-1"></script>
   <script>
@@ -51,92 +51,45 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="python-api">
-<h1>Python API<a class="headerlink" href="#python-api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="hgflask">
-<h2>hgflask<a class="headerlink" href="#hgflask" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="hgflask.server.start">
-<code class="descclassname">hgflask.server.</code><code class="descname">start</code><span class="sig-paren">(</span><em>tilesets</em>, <em>port=None</em>, <em>tmp_dir='/tmp/hgflask'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hgflask/server.html#start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hgflask.server.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start the hgflask server. If a port is not specified, an open port
-will be automatically selected.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>tilesets</strong> (<em>object</em>) – <p>The list of tilesets to serve. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hgflask.tilesets</span> <span class="kn">as</span> <span class="nn">hfti</span>
+  <div class="section" id="docker">
+<h1>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="running-locally">
+<h2>Running locally<a class="headerlink" href="#running-locally" title="Permalink to this headline">¶</a></h2>
+<p>HiGlass can also be run locally as a docker container. The [higlass-docker](<a class="reference external" href="https://github.com/hms-dbmi/higlass-docker">https://github.com/hms-dbmi/higlass-docker</a>) repository contains detailed information about how to set it up and run it.</p>
+<p>The simple example below stops any running higlass containers, removes them, pulls the latest version and runs it.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker stop higlass-container<span class="p">;</span>
+docker rm higlass-container<span class="p">;</span>
 
-<span class="n">tilesets</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">hfti</span><span class="o">.</span><span class="n">cooler</span><span class="p">(</span><span class="s1">&#39;mycooler.cool&#39;</span><span class="p">,</span>
-    <span class="n">hfti</span><span class="o">.</span><span class="n">bigwig</span><span class="p">(</span><span class="s1">&#39;mybigwig.bigWig&#39;</span><span class="p">,</span>
-<span class="p">]</span>
+docker pull gehlenborglab/higlass:v0.4.17 <span class="c1"># higher versions are experimental and may or may not work</span>
+
+
+docker run --detach <span class="se">\</span>
+           --publish <span class="m">8989</span>:80 <span class="se">\</span>
+           --volume ~/hg-data:/data <span class="se">\</span>
+           --volume ~/tmp:/tmp <span class="se">\</span>
+           --name higlass-container <span class="se">\</span>
+         gehlenborglab/higlass:v0.4.17
 </pre></div>
 </div>
-</li>
-<li><strong>port</strong> (<em>int</em>) – The port to start this server on. If it is None, a port
-will automatically be assigned.</li>
-<li><strong>tmp_dir</strong> (<em>string</em>) – A temporary directory to be used for mounting http files
-(experimental)</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+<p>The higlass website should now be visible at <code class="docutils literal"><span class="pre">http://localhost:8989</span></code>. Take a look at the documentation for <a class="reference external" href="https://github.com/hms-dbmi/higlass/wiki/Common-Tasks#adding-a-new-track">adding a new track</a> to see how to display data.</p>
 </div>
-<div class="section" id="hgflask-client">
-<h2>hgflask.client<a class="headerlink" href="#hgflask-client" title="Permalink to this headline">¶</a></h2>
-<dl class="method">
-<dt id="hgflask.client.View.__init__">
-<code class="descclassname">View.</code><code class="descname">__init__</code><span class="sig-paren">(</span><em>tracks=[]</em>, <em>x=0</em>, <em>y=0</em>, <em>width=12</em>, <em>height=6</em>, <em>initialXDomain=None</em>, <em>initialYDomain=None</em>, <em>uid=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hgflask/client.html#View.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hgflask.client.View.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a new view</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>tracks</strong> (<em>[</em><em>]</em>) – A list of Tracks to include in this view</li>
-<li><strong>x</strong> (<em>int</em>) – The position of this view on the grid</li>
-<li><strong>y</strong> (<em>int</em>) – The position of this view on the grid</li>
-<li><strong>width</strong> (<em>int</em>) – The width of this of view on a 12 unit grid</li>
-<li><strong>height</strong> (<em>int</em>) – The height of the this view. The height is proportional
-to the height of all the views present.</li>
-<li><strong>initialXDoamin</strong> (<em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – The initial x range of the view</li>
-<li><strong>initialYDomain</strong> (<em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – The initial y range of the view</li>
-<li><strong>uid</strong> (<em>string</em>) – The uid of new view</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hgflask.client.Track.__init__">
-<code class="descclassname">Track.</code><code class="descname">__init__</code><span class="sig-paren">(</span><em>track_type</em>, <em>position</em>, <em>tileset_uuid=None</em>, <em>api_url=None</em>, <em>height=None</em>, <em>width=None</em>, <em>options={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hgflask/client.html#Track.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hgflask.client.Track.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a track to a position.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>track_type</strong> (<em>string</em>) – The type of track to add (e.g. “heatmap”, “line”)</li>
-<li><strong>position</strong> (<em>string</em>) – One of ‘top’, ‘bottom’, ‘center’, ‘left’, ‘right’</li>
-<li><strong>tileset_uuid</strong> – The of uuid of the tileset being displayed in this track</li>
-<li><strong>api_url</strong> (<em>string</em>) – The server storing the data for this track</li>
-<li><strong>height</strong> (<em>int</em>) – The height of the track (in pixels)</li>
-<li><strong>width</strong> (<em>int</em>) – The width of the track (in pixels)</li>
-<li><strong>options</strong> (<em>{}</em>) – The options to pass onto the track</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+<div class="section" id="running-remotely">
+<h2>Running remotely<a class="headerlink" href="#running-remotely" title="Permalink to this headline">¶</a></h2>
+<p>For security reasons, an instance created this way will not be accessible from hosts other than “localhost”. To make it accessible to other hosts, please specify a hostname using the <code class="docutils literal"><span class="pre">SITE_URL</span></code> environment variable:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run --detach <span class="se">\</span>
+         --publish <span class="m">8989</span>:80 <span class="se">\</span>
+         --volume ~/hg-data:/data <span class="se">\</span>
+         --volume ~/tmp:/tmp <span class="se">\</span>
+         --name higlass-container <span class="se">\</span>
+         -e <span class="nv">SITE_URL</span><span class="o">=</span>my.higlass.org <span class="se">\</span>
+         gehlenborglab/higlass:v0.4.17
+</pre></div>
+</div>
+<p>To use the admin interface for managing the available datasets, a superuser needs to created:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker <span class="nb">exec</span> -it higlass-container higlass-server/manage.py createsuperuser
+</pre></div>
+</div>
+<p>Once a username and password are created, the admin interface can be accessed at <code class="docutils literal"><span class="pre">http://localhost:8989/admin</span></code>.</p>
 </div>
 </div>
 
@@ -169,9 +122,9 @@ to the height of all the views present.</li>
 <li class="toctree-l2"><a class="reference internal" href="jupyter.html#usage">Usage</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Python API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#hgflask">hgflask</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#hgflask-client">hgflask.client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_api.html">Python API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python_api.html#hgflask">hgflask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_api.html#hgflask-client">hgflask.client</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="javascript_api.html">Javascript API</a><ul>
@@ -224,9 +177,9 @@ to the height of all the views present.</li>
 <li class="toctree-l2"><a class="reference internal" href="higlass_server.html#api">API</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="higlass_docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="higlass_docker.html#running-locally">Running locally</a></li>
-<li class="toctree-l2"><a class="reference internal" href="higlass_docker.html#running-remotely">Running remotely</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-locally">Running locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-remotely">Running remotely</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="view_config.html">View Configs</a><ul>
@@ -249,8 +202,8 @@ to the height of all the views present.</li>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="jupyter.html" title="previous chapter">Jupyter Notebooks</a></li>
-      <li>Next: <a href="javascript_api.html" title="next chapter">Javascript API</a></li>
+      <li>Previous: <a href="higlass_server.html" title="previous chapter">Server</a></li>
+      <li>Next: <a href="view_config.html" title="next chapter">View Configs</a></li>
   </ul></li>
 </ul>
 </div>
@@ -276,7 +229,7 @@ to the height of all the views present.</li>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/python_api.rst.txt"
+      <a href="_sources/higlass_docker.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
