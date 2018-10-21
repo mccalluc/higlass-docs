@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Server &#8212; HiGlass v1.0 documentation</title>
+    <title>Docker &#8212; HiGlass v1.0 documentation</title>
     <link rel="stylesheet" href="_static/higlass.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Docker" href="higlass_docker.html" />
-    <link rel="prev" title="Views" href="views.html" />
+    <link rel="next" title="View Configs" href="view_config.html" />
+    <link rel="prev" title="Server" href="higlass_server.html" />
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-77756807-1"></script>
   <script>
@@ -51,110 +51,45 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="server">
-<h1>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-</div>
-<div class="section" id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
-<p>The HiGlass server accepts a number of options to customize its use.
-Most of these options are set using environment variables before the
-server is started:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">OPTION</span><span class="o">=</span>value<span class="p">;</span> python manage.py runserver
+  <div class="section" id="docker">
+<h1>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="running-locally">
+<h2>Running locally<a class="headerlink" href="#running-locally" title="Permalink to this headline">¶</a></h2>
+<p>HiGlass can also be run locally as a docker container. The [higlass-docker](<a class="reference external" href="https://github.com/hms-dbmi/higlass-docker">https://github.com/hms-dbmi/higlass-docker</a>) repository contains detailed information about how to set it up and run it.</p>
+<p>The simple example below stops any running higlass containers, removes them, pulls the latest version and runs it.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker stop higlass-container<span class="p">;</span>
+docker rm higlass-container<span class="p">;</span>
+
+docker pull gehlenborglab/higlass:v0.4.17 <span class="c1"># higher versions are experimental and may or may not work</span>
+
+
+docker run --detach <span class="se">\</span>
+           --publish <span class="m">8989</span>:80 <span class="se">\</span>
+           --volume ~/hg-data:/data <span class="se">\</span>
+           --volume ~/tmp:/tmp <span class="se">\</span>
+           --name higlass-container <span class="se">\</span>
+         gehlenborglab/higlass:v0.4.17
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">BASE_DIR</span></code> - Set the Django base directory. This is where Django will
-look for the database and the media directories.</p>
-<p><code class="docutils literal"><span class="pre">REDIS_HOST</span></code> - The host name for the redis server to use for tile caching.  If
-it’s not specified, then no in-memory tile caching will be performed.</p>
-<p><code class="docutils literal"><span class="pre">REDIS_PORT</span></code> - The port for redis server to use for tile caching. If it’s not
-set and a host is provided, the default port will be used.</p>
+<p>The higlass website should now be visible at <code class="docutils literal"><span class="pre">http://localhost:8989</span></code>. Take a look at the documentation for <a class="reference external" href="https://github.com/hms-dbmi/higlass/wiki/Common-Tasks#adding-a-new-track">adding a new track</a> to see how to display data.</p>
 </div>
-<div class="section" id="development">
-<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
-<p>Running the server locally:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python manage.py runserver <span class="m">8000</span>
+<div class="section" id="running-remotely">
+<h2>Running remotely<a class="headerlink" href="#running-remotely" title="Permalink to this headline">¶</a></h2>
+<p>For security reasons, an instance created this way will not be accessible from hosts other than “localhost”. To make it accessible to other hosts, please specify a hostname using the <code class="docutils literal"><span class="pre">SITE_URL</span></code> environment variable:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run --detach <span class="se">\</span>
+         --publish <span class="m">8989</span>:80 <span class="se">\</span>
+         --volume ~/hg-data:/data <span class="se">\</span>
+         --volume ~/tmp:/tmp <span class="se">\</span>
+         --name higlass-container <span class="se">\</span>
+         -e <span class="nv">SITE_URL</span><span class="o">=</span>my.higlass.org <span class="se">\</span>
+         gehlenborglab/higlass:v0.4.17
 </pre></div>
 </div>
-</div>
-<div class="section" id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
-<p>There are test in <code class="docutils literal"><span class="pre">tilesets/views.py</span></code> which can be run
-from the command line:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python manage.py <span class="nb">test</span> tilesets
+<p>To use the admin interface for managing the available datasets, a superuser needs to created:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker <span class="nb">exec</span> -it higlass-container higlass-server/manage.py createsuperuser
 </pre></div>
 </div>
-<p>More specific tests can be run by specifying the class and function
-that contain the test:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python manage.py <span class="nb">test</span> tilesets.tests.CoolerTest.test_get_multi_tiles
-</pre></div>
-</div>
-<div class="section" id="chromosome-sizes">
-<h3>Chromosome sizes<a class="headerlink" href="#chromosome-sizes" title="Permalink to this headline">¶</a></h3>
-<p>Chromosome sizes specify the lengths of the chromosomes that make up an
-assembly. While they have no intrinsic biological order, HiGlass displays all
-chromosomes together on a line so the order of the entries in the file does
-have a meaning.</p>
-<p>They must be imported with the <cite>chromsizes-tsv</cite> filetype and <cite>chromsizes</cite>
-datatype to be properly recognized by the server and the API.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>docker <span class="nb">exec</span> higlass-container python <span class="se">\</span>
-        higlass-server/manage.py ingest_tileset <span class="se">\</span>
-        --filename /tmp/chromsizes_hg19.tsv <span class="se">\</span>
-        --filetype chromsizes-tsv <span class="se">\</span>
-        --datatype chromsizes
-</pre></div>
-</div>
-<p>Or using curl:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>curl -u <span class="sb">`</span>cat ~/.higlass-server-login<span class="sb">`</span> <span class="se">\</span>
-    -F <span class="s2">&quot;datafile=@/Users/peter/projects/negspy/negspy/data/mm10/chromInfo.txt&quot;</span> <span class="se">\</span>
-    -F <span class="s2">&quot;filetype=chromsizes-tsv&quot;</span> <span class="se">\</span>
-    -F <span class="s2">&quot;datatype=chromsizes&quot;</span> <span class="se">\</span>
-    -F <span class="s2">&quot;coordSystem=mm10&quot;</span> <span class="se">\</span>
-    -F <span class="s2">&quot;name=Chromosomes (mm10)&quot;</span> <span class="se">\</span>
-    http://higlass.io/api/v1/tilesets/
-</pre></div>
-</div>
-<p>This should return a JSON object contain a UUID to confirm that the data has been
-added to the server:</p>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="nt">&quot;uuid&quot;</span><span class="p">:</span><span class="s2">&quot;DRpJETNeTAShnhng6KhhXw&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;datafile&quot;</span><span class="p">:</span><span class="s2">&quot;http://higlass.io/api/v1/tilesets/media/uploads/chromInfo_ui7zU3M.txt&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;filetype&quot;</span><span class="p">:</span><span class="s2">&quot;chromsizes-tsv&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;datatype&quot;</span><span class="p">:</span><span class="s2">&quot;chromsizes&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;private&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span>
-   <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;Chromosomes (mm10)&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;coordSystem&quot;</span><span class="p">:</span><span class="s2">&quot;mm10&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;coordSystem2&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;created&quot;</span><span class="p">:</span><span class="s2">&quot;2017-08-10T18:44:40.369924Z&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="api">
-<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
-<p>Retrieving a list of available tilesets:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>curl localhost:8000/api/v1/tilesets
-</pre></div>
-</div>
-<p>To filter by a specific filetype, use the <cite>t=filetype</cite> parameter:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>curl localhost:8000/api/v1/tilesets?t<span class="o">=</span>cooler
-</pre></div>
-</div>
-<p>To fileter by datatype, use the <cite>dt=datatype</cite> parameter:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>curl localhost:8000/api/v1/tilesets?dt<span class="o">=</span>matrix
-</pre></div>
-</div>
-<div class="section" id="id1">
-<h3>Testing<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python manage.py <span class="nb">test</span> tilesets --failfast
-</pre></div>
-</div>
-<p>Or to test a more specific code block:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>python manage.py <span class="nb">test</span> tilesets.tests.CoolerTest.test_transforms --failfast
-</pre></div>
-</div>
-</div>
+<p>Once a username and password are created, the admin interface can be accessed at <code class="docutils literal"><span class="pre">http://localhost:8989/admin</span></code>.</p>
 </div>
 </div>
 
@@ -226,16 +161,16 @@ added to the server:</p>
 <li class="toctree-l2"><a class="reference internal" href="views.html#view-synchronization">View synchronization</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#development">Development</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="higlass_server.html">Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="higlass_server.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="higlass_server.html#development">Development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="higlass_server.html#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="higlass_server.html#api">API</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="higlass_docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="higlass_docker.html#running-locally">Running locally</a></li>
-<li class="toctree-l2"><a class="reference internal" href="higlass_docker.html#running-remotely">Running remotely</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-locally">Running locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-remotely">Running remotely</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="view_config.html">View Configs</a><ul>
@@ -250,8 +185,8 @@ added to the server:</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="views.html" title="previous chapter">Views</a></li>
-      <li>Next: <a href="higlass_docker.html" title="next chapter">Docker</a></li>
+      <li>Previous: <a href="higlass_server.html" title="previous chapter">Server</a></li>
+      <li>Next: <a href="view_config.html" title="next chapter">View Configs</a></li>
   </ul></li>
 </ul>
 </div>
@@ -277,7 +212,7 @@ added to the server:</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/higlass_server.rst.txt"
+      <a href="_sources/higlass_docker.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

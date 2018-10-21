@@ -164,10 +164,11 @@ crucial are listed below.
     :glob:
 
     tutorial
-    jupyter
-    python_api
     javascript_api
     data_preparation
     track_types
+    views
+    higlass_server
+    higlass_docker
+    view_config
     developer 
-    *
