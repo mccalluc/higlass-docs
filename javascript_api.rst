@@ -61,8 +61,7 @@ try to fetch a remote viewconfig.
 The ``options`` parameter can currently only specify the ``bounded`` property
 which tells the HiGlass component to fill all the space in the containing
 element. Note that if ``bounded`` is set to true, then ``element`` must have a
-fixed height. ``callback`` is used to return an api variable which can be used
-to access HiGlass events.
+fixed height. 
 
 The function returns an instance of the public API of a HiGlass component.
 
