@@ -180,4 +180,4 @@ API Functions
 
 .. js:autofunction:: shareViewConfigAsLink
 
-.. js:autofunction:: on
+.. js:autofunction:: api.on
