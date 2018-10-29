@@ -225,6 +225,22 @@ the import will also fail. If a <cite>coordSystem</cite> is specified for the bi
 <div class="line"><code class="docutils literal"><span class="pre">ingest_tileset</span> <span class="pre">--filetype</span> <span class="pre">bigwig</span> <span class="pre">--datatype</span> <span class="pre">vector</span> <span class="pre">--coordSystem</span> <span class="pre">hg19</span> <span class="pre">chromSizes.tsv</span></code></div>
 </div>
 </div>
+<div class="section" id="chromosome-sizes">
+<h2>Chromosome Sizes<a class="headerlink" href="#chromosome-sizes" title="Permalink to this headline">¶</a></h2>
+<p>Chromosome sizes can be used to create chromosome label and chromosome grid tracks.
+They consist of a tab-separated file containing chromosome names and sizes
+as columns:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>chr1    <span class="m">249250621</span>
+chr2    <span class="m">243199373</span>
+chr3    <span class="m">198022430</span>
+...
+</pre></div>
+</div>
+<p>Chromosome sizes can be import into the higlass server using the <code class="docutils literal"><span class="pre">--filetype</span> <span class="pre">chromsizes-tsv</span></code> and <code class="docutils literal"><span class="pre">--datatype</span> <span class="pre">chromsizes</span></code> parameters. A <code class="docutils literal"><span class="pre">coordSystem</span></code> should be included to identify the assembly that these chromosomes define.</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal"><span class="pre">ingest_tileset</span> <span class="pre">--filetype</span> <span class="pre">chromsizes-tsv</span> <span class="pre">--datatype</span> <span class="pre">chromsizes</span> <span class="pre">--coordSystem</span> <span class="pre">hg19</span> <span class="pre">chromSizes.tsv</span></code></div>
+</div>
+</div>
 <div class="section" id="gene-annotation-tracks">
 <h2>Gene Annotation Tracks<a class="headerlink" href="#gene-annotation-tracks" title="Permalink to this headline">¶</a></h2>
 <p>HiGlass uses a specialized track for displaying gene annotations. It is rougly
@@ -655,6 +671,7 @@ segment1    <span class="m">10</span>  <span class="m">100</span> <span class="m
 <li class="toctree-l2"><a class="reference internal" href="#bedpe-like-files">Bedpe-like Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bedgraph-files">BedGraph files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bigwig-files">bigWig files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#chromosome-sizes">Chromosome Sizes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gene-annotation-tracks">Gene Annotation Tracks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hitile-files">Hitile files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cooler-files">Cooler files</a></li>
