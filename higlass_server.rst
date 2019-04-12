@@ -16,7 +16,7 @@ server is started:
 
     export OPTION=value; python manage.py runserver
 
-``BASE_DIR`` - Set the Django base directory. This is where Django will 
+``BASE_DIR`` - Set the Django base directory. This is where Django will
 look for the database and the media directories.
 
 ``REDIS_HOST`` - The host name for the redis server to use for tile caching.  If
@@ -39,7 +39,7 @@ Running the server locally:
 Testing
 -------
 
-There are test in ``tilesets/views.py`` which can be run
+There are tests in ``tilesets/views.py`` which can be run
 from the command line:
 
 .. code-block:: bash
@@ -115,7 +115,7 @@ To filter by a specific filetype, use the `t=filetype` parameter:
 
     curl localhost:8000/api/v1/tilesets?t=cooler
 
-To fileter by datatype, use the `dt=datatype` parameter:
+To filter by datatype, use the `dt=datatype` parameter:
 
 .. code-block:: bash
 
